@@ -50,7 +50,7 @@ topMenuEl.classList.add("flex-around");
 // 1.   Iterate over the entire menuLinks array and for each "link" object:
 for (let link of menuLinks) {
   // 2.   Create an <a> element.
-  let anchor = document.createElement("a");
+  let anchor = document.createElement('A');
 
   // 3.   On the new element, add an href attribute with its value set to the href property of the "link" object.
   anchor.setAttribute("href", link.href);
@@ -79,3 +79,19 @@ subMenuEl.style.position = 'absolute';
 //2. Set the CSS top property of subMenuEl to the value of 0.
 subMenuEl.style.top = '0';
 
+// 1. Select and cache the all of the <a> elements inside of topMenuEl in a variable named topMenuLinks.
+const topMenuLinks = topMenuEl.querySelectorAll('a');
+
+// 2. Attach a delegated 'click' event listener to topMenuEl.
+// The first line of code of the event listener function should call the event object's preventDefault() method.
+// The second line of code of the function should immediately return if the element clicked was not an <a> element.
+// Log the content of the <a> to verify the handler is working.
+topMenuEl.addEventListener('click', function(event) {
+  event.preventDefault();
+
+if (event.target.tagName !== 'A') {
+  return;
+
+}
+console.log(event.target.textContent);
+});

@@ -52,6 +52,7 @@ header, #top-menu {
 	width: 100%;
 	z-index: 10;
 	transition: top 0.5s ease-out;
+  position: absolute;
 }
 #sub-menu a:hover {
 	background-color: var(--top-menu-bg);
