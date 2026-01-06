@@ -89,9 +89,20 @@ const topMenuLinks = topMenuEl.querySelectorAll('a');
 topMenuEl.addEventListener('click', function(event) {
   event.preventDefault();
 
-if (event.target.tagName !== 'A') {
-  return;
+ if (event.target.tagName !== 'A') return;
+  console.log(event.target.textContent);
+  
+  // Check if the clicked link already has 'active' class
+  if (event.target.classList.contains('active')) {
+    // If active, remove it
+    event.target.classList.remove('active');
+  } else {
+    // If not active, first remove 'active' from ALL links
+    topMenuLinks.forEach(link => {
+      link.classList.remove('active');
+    });
 
-}
-console.log(event.target.textContent);
+    // Then add 'active' to the clicked link
+    event.target.classList.add('active');
+  }
 });
