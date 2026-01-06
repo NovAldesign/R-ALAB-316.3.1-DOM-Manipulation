@@ -148,3 +148,8 @@ topMenuEl.addEventListener('click', function (event) {
       subMenuEl.style.top = '0';
     }
 
+  } else {
+    evt.target.classList.remove('active');
+    // hide submenu when deactivating
+    subMenuEl.style.top = '0';
+  });
