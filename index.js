@@ -1,20 +1,26 @@
 // Menu data structure
 var menuLinks = [
-  {text: 'about', href: '/about'},
-  {text: 'catalog', href: '#', subLinks: [
-    {text: 'all', href: '/catalog/all'},
-    {text: 'top selling', href: '/catalog/top'},
-    {text: 'search', href: '/catalog/search'},
-  ]},
-  {text: 'orders', href: '#' , subLinks: [
-    {text: 'new', href: '/orders/new'},
-    {text: 'pending', href: '/orders/pending'},
-    {text: 'history', href: '/orders/history'},
-  ]},
-  {text: 'account', href: '#', subLinks: [
-    {text: 'profile', href: '/account/profile'},
-    {text: 'sign out', href: '/account/signout'},
-  ]},
+  { text: 'about', href: '/about' },
+  {
+    text: 'catalog', href: '#', subLinks: [
+      { text: 'all', href: '/catalog/all' },
+      { text: 'top selling', href: '/catalog/top' },
+      { text: 'search', href: '/catalog/search' },
+    ]
+  },
+  {
+    text: 'orders', href: '#', subLinks: [
+      { text: 'new', href: '/orders/new' },
+      { text: 'pending', href: '/orders/pending' },
+      { text: 'history', href: '/orders/history' },
+    ]
+  },
+  {
+    text: 'account', href: '#', subLinks: [
+      { text: 'profile', href: '/account/profile' },
+      { text: 'sign out', href: '/account/signout' },
+    ]
+  },
 ];
 
 // Part 1 -------------------------------------------------
@@ -86,12 +92,12 @@ const topMenuLinks = topMenuEl.querySelectorAll('a');
 // The first line of code of the event listener function should call the event object's preventDefault() method.
 // The second line of code of the function should immediately return if the element clicked was not an <a> element.
 // Log the content of the <a> to verify the handler is working.
-topMenuEl.addEventListener('click', function(event) {
+topMenuEl.addEventListener('click', function (event) {
   event.preventDefault();
 
- if (event.target.tagName !== 'A') return;
+  if (event.target.tagName !== 'A') return;
   console.log(event.target.textContent);
-  
+
   // Check if the clicked link already has 'active' class
   if (event.target.classList.contains('active')) {
     // If active, remove it
@@ -106,3 +112,39 @@ topMenuEl.addEventListener('click', function(event) {
     event.target.classList.add('active');
   }
 });
+
+// Part 5  -------------------------------------------------
+// Within the event listener, if the clicked <a> element does not yet have a class of "active" (it was inactive when clicked):
+// If the clicked <a> element's "link" object within menuLinks has a subLinks property (all do, except for the "link" object for ABOUT), set the CSS top property of subMenuEl to 100%.
+// Otherwise, set the CSS top property of subMenuEl to 0.
+// Hint: Caching the "link" object will come in handy for passing its subLinks array later.
+topMenuEl.addEventListener('click', function (event) {
+  event.preventDefault();
+  if (event.target.tagName !== 'A') return;
+  console.log(event.target.textContent);
+
+  // remove active from all links
+  topMenuLinks.forEach(link => {
+    link.classList.remove('active');
+  });
+
+  // toggle active on clicked link
+  if (!event.target.classList.contains('active')) {
+    event.target.classList.add('active');
+
+    // find the corresponding link object in menuLinks array
+    const linkText = event.target.textContent;
+    const linkObject = menuLinks.find(link => link.text === linkText);
+
+    // show or hide submenu based on whether subLinks exist
+    if (linkObject && linkObject.subLinks) {
+      //show submenu
+      subMenuEl.style.top = '100%';
+
+      // build submenu content
+      buildSubmenu(linkObject.subLinks);
+    } else {
+      //hide submenu
+      subMenuEl.style.top = '0';
+    }
+
